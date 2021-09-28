@@ -4,6 +4,7 @@
   "description": "ui for the movie analyst website....im totally not ripping this off.......",
   "scripts": {
     "test": "mocha"
+    "start": "SET NODE_ENV=dev && node server.js"
   },
   "repository": {
     "type": "git",
