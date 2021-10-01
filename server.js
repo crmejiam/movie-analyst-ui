@@ -70,6 +70,9 @@ app.get('/pending', function(req, res){
     .end(function(err, data) {
       if(data.status == 403){
         res.send(403, '403 Forbidden');
+      } else {
+        var pending = data.body;
+        res.render('pending', {pending : pending});
       }
     })
 })
