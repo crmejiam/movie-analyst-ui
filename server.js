@@ -1,6 +1,7 @@
 // Declare our dependencies
 var express = require('express');
 var request = require('superagent');
+require('dotenv').config();
 var backendHost = process.env.BACK_HOST;
 // Create our express app
 var app = express();
