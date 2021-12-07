@@ -1,21 +1,12 @@
 pipeline { 
     agent { 
-        docker { 
-            image 'node:16-alpine' 
-            args '-dp 3030:3030 --name jenkins-test'
-            } 
+        docker { image 'node:16-alpine' } 
         }
     options {
         skipStagesAfterUnstable()
     }
     stages {
         stage('Test'){
-            agent { 
-                docker { 
-                    image 'node:16-alpine' 
-                    args '-dp 3030:3030 --name jenkins-test'
-                } 
-            }
             steps {
                 sh 'whoami'
                 sh 'npm install'
