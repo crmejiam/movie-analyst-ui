@@ -2,12 +2,16 @@ pipeline {
     agent { 
         docker { 
             image 'node:16-alpine' 
-            args '-dp 3030:3030'
+            args '-dp 3030:3030 --name jenkins-test'
             } }
     options {
         skipStagesAfterUnstable()
     }
     stages {
+        stage('Initialize'){
+            def dockerHome = tool 'docker'
+            env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
         stage('Test'){
             steps {
                 sh 'whoami'
