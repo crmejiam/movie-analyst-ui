@@ -1,5 +1,5 @@
 pipeline { 
-    agent { docker { image 'node:16-alpine' } }
+    agent { label 'docker' { image 'node:16-alpine' } }
     options {
         skipStagesAfterUnstable()
     }
