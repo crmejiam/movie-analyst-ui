@@ -1,5 +1,9 @@
 pipeline { 
-    agent { label 'docker' { image 'node:16-alpine' } }
+    agent { 
+        docker { 
+            image 'node:16-alpine' 
+            args '-dp 3030:3030'
+            } }
     options {
         skipStagesAfterUnstable()
     }
