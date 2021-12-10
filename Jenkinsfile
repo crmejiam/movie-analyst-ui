@@ -8,7 +8,7 @@ pipeline {
             steps {
                 sh "echo 'First test running on docker container with jenkins'"
                 sh 'whoami'
-                sh 'sudo npm install'
+                sh 'npm install'
                 sh 'npm test'
             }
         }
