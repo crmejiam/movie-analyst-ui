@@ -9,7 +9,7 @@ pipeline {
         stage('Test'){
             steps {
                 sh "echo 'First test running on docker container with jenkins'"
-                sh 'pwd'
+                sh 'chown -R 113:119 "/.npm"'
                 sh 'sudo npm install'
                 sh 'npm test'
             }
