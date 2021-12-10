@@ -16,19 +16,13 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Build') {
+        stage('Build & Push') {
             steps {
                 script {
                     def frontImage = docker.build("crmejiam/rampup-frontend")
-                }
-                sh 'ls -l'
-            }
-        }
-        stage('Push') {
-            steps {
-                script{
                     frontImage.push()
                 }
+                sh 'ls -l'
             }
         }
         stage('Clean') {
