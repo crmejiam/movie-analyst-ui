@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh "echo 'First test running on docker container with jenkins'"
                 sh 'pwd'
-                sh 'npm install'
+                sh 'sudo npm install'
                 sh 'npm test'
             }
         }
