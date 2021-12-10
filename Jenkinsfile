@@ -8,7 +8,8 @@ pipeline {
     stages {
         stage('Test'){
             steps {
-                sh 'whoami'
+                sh "echo 'First test running on docker container with jenkins'"
+                sh 'pwd'
                 sh 'npm install'
                 sh 'npm test'
             }
