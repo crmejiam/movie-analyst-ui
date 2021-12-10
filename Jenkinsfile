@@ -1,10 +1,11 @@
 pipeline { 
     agent any
-
     tools {nodejs "nodejs"}
-
     options {
         skipStagesAfterUnstable()
+    }
+    environment{
+        registryCredential = 'd08b1f0a-4cd6-4f33-b7f5-a9414a07f3ef'
     }
     stages {
         stage('Test'){
@@ -17,13 +18,16 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t crmejiam/rampup-frontend .'
+                def frontImage = docker.build("crmejiam/rampup-frontend")
                 sh 'ls -l'
             }
         }
         stage('Push') {
             steps {
-                sh 'docker push crmejiam/rampup-frontend' //credentials
+                script{
+                    docker.withRegistry('', 'd08b1f0a-4cd6-4f33-b7f5-a9414a07f3ef')
+                    frontImage.push()
+                }
             }
         }
         stage('Clean') {
