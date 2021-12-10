@@ -18,7 +18,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                def frontImage = docker.build("crmejiam/rampup-frontend")
+                script {
+                    def frontImage = docker.build("crmejiam/rampup-frontend")
+                }
                 sh 'ls -l'
             }
         }
