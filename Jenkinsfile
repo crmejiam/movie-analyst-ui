@@ -21,17 +21,17 @@ pipeline {
                 sh 'ls -l'
             }
         }
-        // stage('Push') {
-        //     steps {
-        //         sh 'docker push crmejiam/rampup-frontend' //credentials
-        //     }
-        // }
-        // stage('Clean') {
-        //     steps {
-        //         sh 'IMAGE_ID=$(sudo docker images --filter=reference=image_name --format "{{.ID}}")'
-        //         sh 'docker image rm $IMAGE_ID'
-        //     }
-        // }
+        stage('Push') {
+            steps {
+                sh 'docker push crmejiam/rampup-frontend' //credentials
+            }
+        }
+        stage('Clean') {
+            steps {
+                sh 'IMAGE_ID=$(sudo docker images --filter=reference=image_name --format "{{.ID}}")'
+                sh 'docker image rm $IMAGE_ID'
+            }
+        }
         // stage('Deploy') {
         //     steps {
         //         // call to ansible
