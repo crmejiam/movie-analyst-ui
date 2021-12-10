@@ -27,7 +27,6 @@ pipeline {
         stage('Push') {
             steps {
                 script{
-                    docker.withRegistry('', 'd08b1f0a-4cd6-4f33-b7f5-a9414a07f3ef')
                     frontImage.push()
                 }
             }
