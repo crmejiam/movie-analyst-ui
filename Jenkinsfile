@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                sh 'IMAGE_ID=$(sudo docker images --filter=reference=image_name --format "{{.ID}}")'
+                sh 'IMAGE_ID=$(docker images --filter=reference=image_name --format "{{.ID}}")'
                 sh 'docker image rm $IMAGE_ID'
             }
         }
