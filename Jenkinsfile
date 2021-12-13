@@ -29,8 +29,7 @@ pipeline {
         }
         stage('Clean') {
             steps {
-                sh 'IMAGE_ID=$(docker images --filter=reference=image_name --format "{{.ID}}")'
-                sh 'docker image rm $IMAGE_ID'
+                sh 'docker rmi crmejiam/rampup-frontend'        // There's no plugin method to remove docker images
             }
         }
         // stage('Deploy') {
