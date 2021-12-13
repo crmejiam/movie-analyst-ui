@@ -20,8 +20,9 @@ pipeline {
             steps {
                 script {
                     def frontImage = docker.build("crmejiam/rampup-frontend")
-                    docker.withRegistry('', dockerCredentials)
-                    frontImage.push()
+                    docker.withRegistry('', dockerCredentials) {
+                        frontImage.push()
+                    }
                 }
                 sh 'ls -l'
             }
@@ -38,4 +39,4 @@ pipeline {
         //     }
         // }
     }
-}
+} 
