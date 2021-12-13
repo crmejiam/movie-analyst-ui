@@ -5,7 +5,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment{
-        registryCredential = 'd08b1f0a-4cd6-4f33-b7f5-a9414a07f3ef'
+        dockerCredentials = 'd08b1f0a-4cd6-4f33-b7f5-a9414a07f3ef'
     }
     stages {
         stage('Test'){
@@ -20,6 +20,7 @@ pipeline {
             steps {
                 script {
                     def frontImage = docker.build("crmejiam/rampup-frontend")
+                    docker.withRegistry('', dockerCredentials)
                     frontImage.push()
                 }
                 sh 'ls -l'
