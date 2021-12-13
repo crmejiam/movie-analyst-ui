@@ -10,8 +10,6 @@ pipeline {
     stages {
         stage('Test'){
             steps {
-                sh "echo 'First test running on docker container with jenkins'"
-                sh 'whoami'
                 sh 'npm install'
                 sh 'npm test'
             }
@@ -30,11 +28,12 @@ pipeline {
         stage('Clean') {
             steps {
                 sh 'docker rmi crmejiam/rampup-frontend'        // There's no plugin method to remove docker images
+                sh 'ls -l'
             }
         }
         // stage('Deploy') {
         //     steps {
-        //         // call to ansible
+        //         
         //     }
         // }
     }
