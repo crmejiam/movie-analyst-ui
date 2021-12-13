@@ -5,7 +5,11 @@ pipeline {
         skipStagesAfterUnstable()
     }
     environment{
+        imageName = "crmejiam/rampup-frontend"
         dockerCredentials = 'd08b1f0a-4cd6-4f33-b7f5-a9414a07f3ef'
+        frontImage = ''
+        ansibleIP = '10.1.1.43'
+        ansiblePort = '5000'
     }
     stages {
         stage('Test'){
@@ -14,27 +18,33 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Build & Push') {
+        stage('Build') {
             steps {
                 script {
-                    def frontImage = docker.build("crmejiam/rampup-frontend")
-                    docker.withRegistry('', dockerCredentials) {
-                        frontImage.push()
-                    }
+                    frontImage = docker.build(imageName)
                 }
                 sh 'ls -l'
             }
         }
+        stage('Push') {
+            steps {
+                script {
+                        docker.withRegistry('', dockerCredentials) {
+                            frontImage.push()
+                    }
+                }
+            }
+        }
         stage('Clean') {
             steps {
-                sh 'docker rmi crmejiam/rampup-frontend'        // There's no plugin method to remove docker images
+                sh 'docker rmi $imageName'        // There's no plugin method to remove docker images
                 sh 'ls -l'
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         
-        //     }
-        // }
+        stage('Deploy') {
+            steps {
+                sh 'curl http://$ansibleIP:$ansiblePort/update/frontend'
+            }
+        }
     }
 } 
