@@ -41,9 +41,9 @@ pipeline {
                 sh 'ls -l'
             }
         }
-        stage('Deploy') {
+        stage ('Invoke_CD') {
             steps {
-                sh 'curl http://$ansibleIP:$ansiblePort/update/frontend'
+                build job: 'frontend_CD_pipeline', propagate: true, wait: true
             }
         }
     }
