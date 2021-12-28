@@ -1,0 +1,48 @@
+pipeline { 
+    agent any
+    tools {nodejs "nodejs"}
+    options {
+        skipStagesAfterUnstable()
+    }
+    environment{
+        imageName = "crmejiam/rampup-frontend"
+        dockerLoggingID = 'dockerLoggingID'
+        frontImage = ''
+    }
+    stages {
+        stage('Test'){
+            steps {
+                sh 'npm install'
+                sh 'npm test'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    frontImage = docker.build(imageName)
+                }
+                sh 'ls -l'
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                        docker.withRegistry('', dockerLoggingID) {
+                            frontImage.push()
+                    }
+                }
+            }
+        }
+        stage('Clean') {
+            steps {
+                sh 'docker rmi $imageName'        // There's no plugin method to remove docker images
+                sh 'ls -l'
+            }
+        }
+        stage ('Invoke_CD') {
+            steps {
+                build job: 'frontend_CD_pipeline', propagate: true, wait: true
+            }
+        }
+    } 
+} 
