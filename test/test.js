@@ -16,7 +16,7 @@ describe('UI', () => {
         chai.request(server)
             .get('/')
             .end((err, res) => {
-                res.should.have.status(200);
+                res.should.have.status(204);
               done();
             });
       });
